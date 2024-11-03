@@ -1,6 +1,9 @@
 
 # Analisador de finanças pessoais usando LLMs
 
+# Instala o Poetry usando pip
+pip install poetry
+
 
 Este é um projeto que te permite analisar finanças pessoais, baseados em arquivos .ofx, utilizando modelos de linguagem (ChatGPT, Claude, Groq, LLMs locais) para categorizar automaticamente as transações.
 

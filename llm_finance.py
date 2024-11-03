@@ -1,4 +1,4 @@
-import ofxparse
+import ofxparse 
 import pandas as pd
 import os
 from datetime import datetime
@@ -17,13 +17,13 @@ for extrato in os.listdir("extratos"):
                 "Descrição": transaction.memo,
                 "ID": transaction.id,
             })
-
     df_temp = pd.DataFrame(transactions_data)
     df_temp["Valor"] = df_temp["Valor"].astype(float)
     df_temp["Data"] = df_temp["Data"].apply(lambda x: x.date())
     df = pd.concat([df, df_temp])
 df = df.set_index("ID")
-df["Valor"] = 1
+# df["Valor"] = 1
+
 
 
 
@@ -35,7 +35,7 @@ from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
 from openai import OpenAI
 from langchain_core.prompts import PromptTemplate
-from langchain_core.output_parsers.string import StrOutputParser
+# from langchain_core.output_parsers.string import StrOutputParser
 from dotenv import load_dotenv, find_dotenv
 
 _ = load_dotenv(find_dotenv())
@@ -72,10 +72,11 @@ prompt = PromptTemplate.from_template(template=template)
 
 # Groq
 chat = ChatGroq(model="llama-3.1-70b-versatile")
-chain = prompt | chat | StrOutputParser()
+chain = prompt | chat #| StrOutputParser()
+
 
 categorias = chain.batch(list(df["Descrição"].values))
 df["Categoria"] = categorias
 
-df = df[df["Data"] >= datetime(2024, 3, 1).date()]
+df = df[df["Data"] >= datetime(2022, 3, 1).date()]
 df.to_csv("finances.csv")
